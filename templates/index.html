@@ -12,9 +12,9 @@
 <body>
   <div class="container">
     <h1>Upload Image to Picture Frame</h1>
-    <p>Please note that the image will be uploaded to a <a href="https://jsonplaceholder.typicode.com/">third-party fake API server</a>, which means that the upload process will sometimes fail.</p>
-    <label class="label" data-toggle="tooltip" title="Change your avatar">
-      <img class="rounded" id="avatar" src="https://avatars0.githubusercontent.com/u/3456749?s=160" alt="avatar">
+    <p>Current Photograph:</p>
+    <label class="label" data-toggle="tooltip" title="Change the Photo">
+      <img class="rounded" id="avatar" src="{{ pic_path }}" alt="avatar">
       <input type="file" class="sr-only" id="input" name="image" accept="image/*">
     </label>
     <div class="progress">
@@ -32,7 +32,7 @@
           </div>
           <div class="modal-body">
             <div class="img-container">
-              <img id="image" src="https://avatars0.githubusercontent.com/u/3456749">
+              <img id="image" src="{{ pic_path }}">
             </div>
           </div>
           <div class="modal-footer">

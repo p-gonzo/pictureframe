@@ -39,7 +39,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   $modal.on('shown.bs.modal', function () {
     cropper = new Cropper(image, {
-      aspectRatio: 1,
+      aspectRatio: (600/448),
       viewMode: 3,
     });
   }).on('hidden.bs.modal', function () {
