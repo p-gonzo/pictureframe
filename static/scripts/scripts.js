@@ -7,6 +7,7 @@ window.addEventListener('DOMContentLoaded', () => {
   var $alert = $('.alert');
   var $modal = $('#modal');
   var cropper;
+  var file;
 
   $('[data-toggle="tooltip"]').tooltip();
 
@@ -19,7 +20,6 @@ window.addEventListener('DOMContentLoaded', () => {
       $modal.modal('show');
     };
     var reader;
-    var file;
     var url;
 
     if (files && files.length > 0) {
@@ -65,8 +65,9 @@ window.addEventListener('DOMContentLoaded', () => {
       canvas.toBlob(function (blob) {
         var formData = new FormData();
 
-        formData.append('avatar', blob, 'avatar.jpg');
-        $.ajax('https://jsonplaceholder.typicode.com/posts', {
+        formData.append("file", file, "file.jpg");
+        
+        $.ajax('/upload', {
           method: 'POST',
           data: formData,
           processData: false,
