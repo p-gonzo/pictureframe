@@ -12,34 +12,42 @@ app.secret_key = 'super secret key'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route('/')
-def main():
-    pic_dir = './static/pictures/current'
-    pic_path = '.' + [os.path.join(pic_dir, f) for f in os.listdir(pic_dir) if os.path.isfile(os.path.join(pic_dir, f))][0]
-    return render_template('index.html', pic_path=pic_path)
+def photos():
+    pics_dir = './static/pictures/library'
+    pics_path = ['.' + os.path.join(pics_dir, f) for f in os.listdir(pics_dir) if os.path.isfile(os.path.join(pics_dir, f))]
+    return render_template('photos.html', photos=pics_path)
+
+@app.route('/crop/<idx>', methods=['POST', 'GET'])
+def crop(idx=None):
+    if request.method == 'GET':
+        pics_dir = './static/pictures/library'
+        pics_path = ['.' + os.path.join(pics_dir, f) for f in os.listdir(pics_dir) if os.path.isfile(os.path.join(pics_dir, f))]
+        photo = pics_path[int(idx)]
+        return render_template('crop.html', photo=photo)
+    elif request.method == 'POST':
+        return
 
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route('/upload', methods=['POST'])
+@app.route('/upload', methods=['POST', 'GET'])
 def upload_file():
     if request.method == 'POST':
-        print(request.files)
-        # check if the post request has the file part
         if 'file' not in request.files:
-            print('no file')
-            flash('No file part')
-            return redirect(url_for('main'))
+            return "", 403
         file = request.files['file']
         # if user does not select file, browser also
         # submit an empty part without filename
         if file.filename == '':
-            flash('No selected file')
-            print('no selected file')
-            return redirect(url_for('main'))
+            return "", 403
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            print('success')
-            flash('Success')
-            return redirect(url_for('main'))
+            pics_dir = './static/pictures/library'
+            pics_names = [f for f in os.listdir(pics_dir) if os.path.isfile(os.path.join(pics_dir, f))]
+            print(pics_names.index(filename))
+            print(pics_names)
+            return redirect(f'/crop/{str(pics_names.index(filename))}')
+    elif request.method == 'GET':
+        return render_template('upload.html')
