@@ -1,5 +1,5 @@
-import asyncio
 import os
+from subprocess import Popen
 
 from flask import Flask, render_template, flash, request, redirect, url_for
 from PIL import Image
@@ -47,7 +47,9 @@ def crop_photo():
         im_crop = im_rot.crop((x, y, x + w, y + h))
         im_resized = im_crop.resize((600,448))
         im_resized.save('./static/pictures/current/image.jpg')
-        # call async io here to set image
+        
+        p = Popen("/usr/bin/python3 /home/phil/Pimoroni/inky/examples/7color/image.py /home/phil/pictureframe/static/pictures/current/image.jpg",shell=True)
+
     return redirect('/current')
 
 def allowed_file(filename):
@@ -74,3 +76,6 @@ def upload_file():
             return redirect(f'/crop/{str(pics_names.index(filename))}')
     elif request.method == 'GET':
         return render_template('upload.html')
+
+if __name__ == '__main__':
+    app.run()
