@@ -18,3 +18,7 @@
 .sized {
   width: 80%;
 }
+
+#hidden-form {
+  display: none;
+}

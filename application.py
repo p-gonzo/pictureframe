@@ -17,15 +17,17 @@ def photos():
     pics_path = ['.' + os.path.join(pics_dir, f) for f in os.listdir(pics_dir) if os.path.isfile(os.path.join(pics_dir, f))]
     return render_template('photos.html', photos=pics_path)
 
-@app.route('/crop/<idx>', methods=['POST', 'GET'])
+@app.route('/crop/<idx>')
 def crop(idx=None):
-    if request.method == 'GET':
-        pics_dir = './static/pictures/library'
-        pics_path = ['.' + os.path.join(pics_dir, f) for f in os.listdir(pics_dir) if os.path.isfile(os.path.join(pics_dir, f))]
-        photo = pics_path[int(idx)]
-        return render_template('crop.html', photo=photo)
-    elif request.method == 'POST':
-        return
+    pics_dir = './static/pictures/library'
+    pics_path = ['.' + os.path.join(pics_dir, f) for f in os.listdir(pics_dir) if os.path.isfile(os.path.join(pics_dir, f))]
+    photo = pics_path[int(idx)]
+    return render_template('crop.html', photo=photo)
+
+@app.route('/crop', methods=['POST'])
+def crop_photo():
+    print(request.form)
+    return redirect('/')
 
 def allowed_file(filename):
     return '.' in filename and \
