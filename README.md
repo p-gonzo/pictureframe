@@ -15,3 +15,9 @@ Controlled with a Raspberry Pi Zero W.
 ```python
 flask --app application --debug run
 ```
+
+## Deployment
+
+- Install `gunicorn` and `nginx`
+- Edit and Use the external config to set up a systemd daemon to run gunicorn
+- Edit and Use the external config to set up an nginx reverse proxy
