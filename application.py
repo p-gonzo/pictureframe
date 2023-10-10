@@ -1,3 +1,4 @@
+import asyncio
 import os
 
 from flask import Flask, render_template, flash, request, redirect, url_for
@@ -17,6 +18,11 @@ def photos():
     pics_dir = './static/pictures/library'
     pics_path = ['.' + os.path.join(pics_dir, f) for f in os.listdir(pics_dir) if os.path.isfile(os.path.join(pics_dir, f))]
     return render_template('photos.html', photos=pics_path)
+
+@app.route('/current')
+def current():
+    photo = './static/pictures/current/image.jpg'
+    return render_template('current.html', photo=photo)
 
 @app.route('/crop/<idx>')
 def crop(idx=None):
@@ -41,8 +47,8 @@ def crop_photo():
         im_crop = im_rot.crop((x, y, x + w, y + h))
         im_resized = im_crop.resize((600,448))
         im_resized.save('./static/pictures/current/image.jpg')
-        print(r)
-    return redirect('/')
+        # call async io here to set image
+    return redirect('/current')
 
 def allowed_file(filename):
     return '.' in filename and \
