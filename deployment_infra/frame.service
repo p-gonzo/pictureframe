@@ -1,0 +1,13 @@
+[Unit]
+Description=Gunicorn instance to serve pictureframe Flask app
+After=network.target
+
+[Service]
+User=phil
+Group=www-data
+WorkingDirectory=/home/phil/pictureframe
+Environment="PATH=/home/phil/.local/bin/flask"
+ExecStart=/home/phil/.local/bin/gunicorn application:app
+
+[Install]
+WantedBy=multi-user.target
