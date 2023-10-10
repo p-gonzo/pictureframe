@@ -1,5 +1,6 @@
 (() => {
 $(document).ready(() => {
+    
     const image = document.getElementById('image');
     const cropper = new Cropper(image, {
         aspectRatio: 600 / 448,
@@ -7,7 +8,6 @@ $(document).ready(() => {
 
     $("#crop").on("click", () => {
         let data = cropper.getData();
-        $('input[name="idx"]').val(0);
         $('input[name="x"]').val(data.x);
         $('input[name="y"]').val(data.y);
         $('input[name="width"]').val(data.width);
@@ -19,7 +19,6 @@ $(document).ready(() => {
     $("#rotate").on("click", () => {
         cropper.rotate(90)
     });
-
 
 });
 })();

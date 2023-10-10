@@ -1,6 +1,7 @@
 import os
 
 from flask import Flask, render_template, flash, request, redirect, url_for
+from PIL import Image
 from werkzeug.utils import secure_filename
 
 UPLOAD_FOLDER = os.path.abspath('./static/pictures/library')
@@ -26,7 +27,21 @@ def crop(idx=None):
 
 @app.route('/crop', methods=['POST'])
 def crop_photo():
-    print(request.form)
+    image_path = request.form['image'][1:]
+    x = float(request.form['x'])
+    y = float(request.form['y'])
+    w = float(request.form['width'])
+    h = float(request.form['height'])
+    r = float(request.form['rotate'])
+    with Image.open(image_path) as im:
+        # The crop method from the Image module takes four coordinates as input.
+        # The right can also be represented as (left+width)
+        # and lower can be represented as (upper+height)
+        im_rot = im.rotate(angle=r*-1, expand=1)
+        im_crop = im_rot.crop((x, y, x + w, y + h))
+        im_resized = im_crop.resize((600,448))
+        im_resized.save('./static/pictures/current/image.jpg')
+        print(r)
     return redirect('/')
 
 def allowed_file(filename):
