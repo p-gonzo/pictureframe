@@ -80,8 +80,7 @@ def upload_file():
 @app.route('/delete', methods =['POST'])
 def delete():
    image_path = request.form['image'][1:]
-   print(os.path.abspath(image_path))
-   call(f"rm {os.path.abspath(image_path)}", shell=True)
+   call(f"/usr/bin/rm {os.path.abspath(image_path)}", shell=True)
    return redirect('/')
 
 if __name__ == '__main__':
