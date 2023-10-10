@@ -17,7 +17,7 @@ $(document).ready(() => {
     });
 
     $("#delete").on("click", () => {
-        $( "#hidden-crop-form" ).first().trigger( "submit" );
+        $( "#hidden-delete-form" ).first().trigger( "submit" );
     });
 
     $("#rotate").on("click", () => {

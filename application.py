@@ -1,7 +1,7 @@
 import os
-from subprocess import Popen
+from subprocess import Popen, call
 
-from flask import Flask, render_template, flash, request, redirect, url_for
+from flask import Flask, render_template, request, redirect
 from PIL import Image
 from werkzeug.utils import secure_filename
 
@@ -48,7 +48,7 @@ def crop_photo():
         im_resized = im_crop.resize((600,448))
         im_resized.save('./static/pictures/current/image.jpg')
         
-        p = Popen("/usr/bin/python3 /home/phil/Pimoroni/inky/examples/7color/image.py /home/phil/pictureframe/static/pictures/current/image.jpg",shell=True)
+        p = Popen("/usr/bin/python3 /home/phil/Pimoroni/inky/examples/7color/image.py /home/phil/pictureframe/static/pictures/current/image.jpg", shell=True)
 
     return redirect('/current')
 
@@ -76,6 +76,13 @@ def upload_file():
             return redirect(f'/crop/{str(pics_names.index(filename))}')
     elif request.method == 'GET':
         return render_template('upload.html')
+    
+@app.route('/delete', methods =['POST'])
+def delete():
+   image_path = request.form['image'][1:]
+   print(os.path.abspath(image_path))
+   call(f"rm {os.path.abspath(image_path)}", shell=True)
+   return redirect('/')
 
 if __name__ == '__main__':
     app.run()
