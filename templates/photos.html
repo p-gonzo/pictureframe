@@ -10,11 +10,12 @@
   <link rel="stylesheet" href="../static/styles/styles.css"></link>
 </head>
 <body>
+    {% set active_page = "all" %}
     {% include 'header.html' %}
     <div class="container">
       <div class="d-flex flex-column">
         {% for photo in photos %}
-        <label class="label" data-toggle="tooltip" title="Select">
+        <label class="label text-center" data-toggle="tooltip" title="Select">
             <a href="./crop/{{loop.index - 1}}" >
                 <img class="rounded sized" src="{{ photo }}" id="photo-{{loop.index}}" />
             </a>
