@@ -16,6 +16,10 @@ $(document).ready(() => {
         $( "#hidden-crop-form" ).first().trigger( "submit" );
     });
 
+    $("#delete").on("click", () => {
+        $( "#hidden-crop-form" ).first().trigger( "submit" );
+    });
+
     $("#rotate").on("click", () => {
         cropper.rotate(90)
     });
