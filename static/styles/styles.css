@@ -19,6 +19,12 @@
   width: 80%;
 }
 
+.framed {
+  width: 95%;
+  padding: 10%;
+  border: 5em solid;
+}
+
 .hidden-form {
   display: none;
 }
