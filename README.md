@@ -8,6 +8,7 @@ Controlled with a Raspberry Pi Zero W.
 
 - Python3
 - Flask
+- Pillow
 
 ## Run local sever
 
