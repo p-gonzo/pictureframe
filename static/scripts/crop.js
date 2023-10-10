@@ -13,7 +13,7 @@ $(document).ready(() => {
         $('input[name="width"]').val(data.width);
         $('input[name="height"]').val(data.height);
         $('input[name="rotate"]').val(data.rotate);
-        $( "form" ).first().trigger( "submit" );
+        $( "#hidden-crop-form" ).first().trigger( "submit" );
     });
 
     $("#rotate").on("click", () => {

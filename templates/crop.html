@@ -12,23 +12,25 @@
 <body>
     {% include 'header.html' %}
     <div class="container">
-    <div class="modal-header">
-        <h5 class="modal-title" id="modalLabel">Crop the image</h5>
-        </button>
-    </div>
-    <div class="modal-body">
-        <div class="img-container">
-        <img id="image" src="{{ photo }}">
+        <div class="modal-header">
+            <h5 class="modal-title" id="modalLabel">Crop the image</h5>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="img-container">
+            <img id="image" src="{{ photo }}">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="rotate">Rotate</button>
+            <button type="button" class="btn btn-primary" id="crop">Crop</button>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" id="delete">Delete</button>
         </div>
     </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" id="rotate">Rotate</button>
-        <button type="button" class="btn btn-primary" id="crop">Crop</button>
-    </div>
-    </div>
 
-
-    <form id="hidden-form" form action="/crop" method="post">
+    <form id="hidden-crop-form" form action="/crop" method="post">
         <label for="image"></label>
         <input type="text" id="image" name="image" value="{{ photo }}">
         <label for="x"></label>
