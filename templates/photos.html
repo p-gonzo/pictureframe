@@ -13,7 +13,25 @@
     {% set active_page = "all" %}
     {% include 'header.html' %}
     <div class="container">
+      <h1 class="text-center">Photo Library</h1>
+      <br/>
       <div class="d-flex flex-column">
+        <button class="btn btn-primary sized mt-0 mb-0 ml-auto mr-auto" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+          Upload New
+        </button>
+        <br/>
+        <div class="collapse" id="collapseExample">
+          <div class="card card-body sized mt-0 mb-0 ml-auto mr-auto">
+            <form method=post form action="/upload" enctype=multipart/form-data class="form-group">
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" id="customFile" name="file" required>
+                <label class="custom-file-label" for="customFile">Choose file</label>
+              </div>
+              <button class="btn btn-primary">Upload</button>
+            </form>
+          </div>
+        </div>
+        <br/>
         {% for photo in photos %}
         <label class="label text-center" data-toggle="tooltip" title="Select">
             <a href="./crop/{{loop.index - 1}}" >
@@ -26,5 +44,6 @@
   <script src="https://unpkg.com/jquery@3/dist/jquery.min.js" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/bootstrap@4/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js" integrity="sha512-9KkIqdfN7ipEW6B6k+Aq20PV31bjODg4AA52W+tYtAE0jE0kMx49bjJ3FgvS56wzmyfMUHbQ4Km2b7l9+Y/+Eg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="../static/scripts/photos.js"></script>
 </body>
 </html>
