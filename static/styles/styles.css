@@ -22,7 +22,7 @@
 .framed {
   width: 95%;
   padding: 10%;
-  border: 10vw solid;
+  border: 10vmin solid #212529;
 }
 
 .hidden-form {

@@ -13,13 +13,13 @@ app = Flask(__name__)
 app.secret_key = 'super secret key'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-@app.route('/')
+@app.route('/photos')
 def photos():
     pics_dir = './static/pictures/library'
     pics_path = ['.' + os.path.join(pics_dir, f) for f in os.listdir(pics_dir) if os.path.isfile(os.path.join(pics_dir, f))]
     return render_template('photos.html', photos=pics_path)
 
-@app.route('/current')
+@app.route('/')
 def current():
     photo = './static/pictures/current/image.jpg'
     return render_template('current.html', photo=photo)
@@ -50,7 +50,7 @@ def crop_photo():
         
         p = Popen("python3 /home/phil/Pimoroni/inky/examples/7color/image.py /home/phil/pictureframe/static/pictures/current/image.jpg", shell=True)
 
-    return redirect('/current')
+    return redirect('/')
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -81,7 +81,7 @@ def upload_file():
 def delete():
    image_path = request.form['image'][1:]
    call(f"rm {os.path.abspath(image_path)}", shell=True)
-   return redirect('/')
+   return redirect('/photos')
 
 if __name__ == '__main__':
     app.run()
