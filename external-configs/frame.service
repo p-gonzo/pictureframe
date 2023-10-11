@@ -1,1 +1,13 @@
-/etc/systemd/system/frame.service
+[Unit]
+Description=Gunicorn instance to serve pictureframe Flask app
+After=network.target
+
+[Service]
+User=phil
+Group=www-data
+WorkingDirectory=/home/phil/pictureframe
+Environment="PATH=/home/phil/.local/bin/flask:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+ExecStart=/home/phil/.local/bin/gunicorn application:app
+
+[Install]
+WantedBy=multi-user.target
