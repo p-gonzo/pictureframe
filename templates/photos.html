@@ -34,10 +34,10 @@
           </div>
         </div>
         <br/>
-        {% for photo in photos %}
+        {% for photo, compressed in photos %}
         <label class="label text-center" data-toggle="tooltip" title="Select">
             <a href="./crop/{{loop.index - 1}}" >
-                <img class="rounded sized" src="{{ photo }}" id="photo-{{loop.index}}" />
+                <img class="rounded sized" src="{{ compressed }}" id="photo-{{loop.index}}" />
             </a>
         </label>
         {% endfor %}

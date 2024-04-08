@@ -6,18 +6,23 @@ from PIL import Image
 from werkzeug.utils import secure_filename
 
 UPLOAD_FOLDER = os.path.abspath('./static/pictures/library')
+COMPRESSED_FOLDER = os.path.abspath('./static/pictures/compressed')
+
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 app = Flask(__name__)
 # Todo - pull in secret key from env config
 app.secret_key = 'super secret key'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['COMPRESSED_FOLDER'] = COMPRESSED_FOLDER
 
 @app.route('/photos')
 def photos():
     pics_dir = './static/pictures/library'
+    compressed_dir = './static/pictures/compressed'
     pics_path = ['.' + os.path.join(pics_dir, f) for f in os.listdir(pics_dir) if os.path.isfile(os.path.join(pics_dir, f))]
-    return render_template('photos.html', photos=pics_path)
+    compressed_path = ['.' + os.path.join(compressed_dir, f) for f in os.listdir(compressed_dir) if os.path.isfile(os.path.join(compressed_dir, f))]
+    return render_template('photos.html', photos=zip(pics_path, compressed_path))
 
 @app.route('/')
 def current():
@@ -73,6 +78,7 @@ def upload_file():
             pics_names = [f for f in os.listdir(pics_dir) if os.path.isfile(os.path.join(pics_dir, f))]
             print(pics_names.index(filename))
             print(pics_names)
+            save_compressed_image(os.path.join(app.config['UPLOAD_FOLDER'], filename), filename)
             return redirect(f'/crop/{str(pics_names.index(filename))}')
     elif request.method == 'GET':
         return render_template('upload.html')
@@ -85,3 +91,12 @@ def delete():
 
 if __name__ == '__main__':
     app.run()
+
+def save_compressed_image(file_path, img_name):
+    
+    base_width= 600
+    img = Image.open(file_path)
+    wpercent = (base_width / float(img.size[0]))
+    hsize = int((float(img.size[1]) * float(wpercent)))
+    img = img.resize((base_width, hsize), Image.Resampling.LANCZOS)
+    img.save(os.path.join(app.config['COMPRESSED_FOLDER'], img_name))
