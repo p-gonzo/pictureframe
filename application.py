@@ -98,5 +98,7 @@ def save_compressed_image(file_path, img_name):
     img = Image.open(file_path)
     wpercent = (base_width / float(img.size[0]))
     hsize = int((float(img.size[1]) * float(wpercent)))
-    img = img.resize((base_width, hsize), Image.Resampling.LANCZOS)
+    # TODO - Add logic to toggle between both of these based on Python Version
+    # img = img.resize((base_width, hsize), Image.Resampling.LANCZOS)
+    img = img.resize((base_width, hsize), Image.LANCZOS)
     img.save(os.path.join(app.config['COMPRESSED_FOLDER'], img_name))
